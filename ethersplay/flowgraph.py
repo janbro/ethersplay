@@ -1,11 +1,13 @@
-from binaryninja import BranchType, FlowGraph, FlowGraphNode, InstructionTextTokenType, DisassemblyTextLine
+from binaryninja import BranchType, FlowGraph, FlowGraphNode, InstructionTextTokenType, DisassemblyTextLine, DisassemblySettings, DisassemblyOption
 
 _graphs = list()
 
 def render_flowgraphs(view):
     global _graphs
+    dSettings = DisassemblySettings()
+    dSettings.set_option(DisassemblyOption.ShowAddress, True)
     for function in view.functions:
-        g = function.create_graph()
+        g = function.create_graph(settings=dSettings)
         g.layout_and_wait()
 
         f = FlowGraph()
